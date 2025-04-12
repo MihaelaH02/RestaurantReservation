@@ -102,6 +102,7 @@ namespace RestaurantReservation.Migrations
                     Email = table.Column<string>(name: "EMAIL", type: "nvarchar(32)", nullable: false),
                     Phone = table.Column<string>(name: "PHONE", type: "nvarchar(16)", nullable: false),
                     AccessFailCount = table.Column<short>(name: "ACCESS_FAIL_COUNT", type: "smallint", nullable: false),
+                    CurrentAccessFailCount = table.Column<short>(name: "CURRENT_ACCESS_FAIL_COUNT", type: "smallint", nullable: false),
                     CreatedAt = table.Column<DateTime>(name: "CREATED_AT", type: "datetime", nullable: false),
                     LastChangeAt = table.Column<DateTime>(name: "LAST_CHANGE_AT", type: "datetime", nullable: false),
                     BlockedAt = table.Column<DateTime>(name: "BLOCKED_AT", type: "datetime", nullable: false)
@@ -153,7 +154,7 @@ namespace RestaurantReservation.Migrations
                     AtmosphereId = table.Column<short>(name: "ATMOSPHERE_ID", type: "smallint", nullable: false),
                     Rating = table.Column<float>(name: "RATING", type: "float", nullable: false),
                     KeepResTableTime = table.Column<float>(name: "KEEP_RES_TABLE_TIME", type: "float", nullable: false),
-                    DefaultMaxResDuration = table.Column<float>(name: "DEFAULT_MAX_RE_DURATION", type: "float", nullable: false)
+                    DefaultMaxResDuration = table.Column<float>(name: "DEFAULT_MAX_RES_DURATION", type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,7 +182,7 @@ namespace RestaurantReservation.Migrations
                     Date = table.Column<DateTime>(name: "DATE", type: "datetime", nullable: false),
                     MsgStatus = table.Column<string>(name: "MSG_STATUS", type: "nvarchar(32)", nullable: false),
                     Log = table.Column<string>(name: "LOG", type: "nvarchar(max)", nullable: false),
-                    AccountId = table.Column<short>(name: "ACCOUNT_ID", type: "smallint", nullable: false)
+                    AccountId = table.Column<short>(name: "ACCOUNT_ID", type: "smallint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -200,7 +201,7 @@ namespace RestaurantReservation.Migrations
                 {
                     Id = table.Column<short>(name: "ID", type: "smallint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RestaurantId = table.Column<short>(name: "RESTAURANT_ID", type: "smallint", nullable: false),
+                    RestaurantId = table.Column<short>(name: "RESTAURANT_ID", type: "smallint", nullable: true),
                     EventId = table.Column<short>(name: "EVENT_ID",type: "smallint", nullable: false),
                     Title = table.Column<string>(name: "TITLE", type: "nvarchar(64)", nullable: false),
                     Description = table.Column<string>(name: "DESCRIPTION", type: "nvarchar(1024)", nullable: false)
@@ -330,7 +331,7 @@ namespace RestaurantReservation.Migrations
                 {
                     Id = table.Column<short>(name: "ID", type: "smallint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RestaurantId = table.Column<short>(name: "RESTAURANT_ID", type: "smallint", nullable: false),
+                    RestaurantId = table.Column<short>(name: "RESTAURANT_ID", type: "smallint", nullable: true),
                     SpecificDate = table.Column<DateTime>(name: "SPECIFIC_DATE", type: "datetime", nullable: false),
                     WeekDay = table.Column<int>(name: "WEEK_DAY", type: "int", nullable: false),
                     HourFrom = table.Column<short>(name: "HOUR_FROM", type: "smallint", nullable: false),
@@ -351,7 +352,7 @@ namespace RestaurantReservation.Migrations
                         column: x => x.RestaurantId,
                         principalTable: "RESTAURANTS",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

@@ -25,141 +25,159 @@ namespace RestaurantReservation.Migrations
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<string>("Role")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ROLE");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccountRoleTypes");
+                    b.ToTable("ACCOUNT_ROLE_TYPE");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Nomenclatures.NotificationEvents", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<string>("Event")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("EVENT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("NotificationEvents");
+                    b.ToTable("NOTIFICATION_EVENTS");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Nomenclatures.RestaurantAtmosphere", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<string>("Atmosphere")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ATMOSPHERE");
 
                     b.HasKey("Id");
 
-                    b.ToTable("RestaurantAtmospheres");
+                    b.ToTable("RESTAURANT_ATMOSPHERE");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Nomenclatures.RestaurantLocations", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<string>("Location")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("LOCATION");
 
                     b.HasKey("Id");
 
-                    b.ToTable("RestaurantLocations");
+                    b.ToTable("RESTAURANT_LOCATIONS");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Nomenclatures.RestaurantSpecialConditions", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<string>("SpecialCondition")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SPECIAL_CONDITION");
 
                     b.Property<byte[]>("Status")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("STATUS");
 
                     b.HasKey("Id");
 
-                    b.ToTable("RestaurantSpecialConditions");
+                    b.ToTable("RESTAURANT_SPECIAL_CONDITIONS");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Nomenclatures.RestaurantTableTypes", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<short>("Seats")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("SEATS");
 
                     b.Property<string>("TableType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TABLE_TYPE");
 
                     b.HasKey("Id");
 
-                    b.ToTable("RestaurantTableTypes");
+                    b.ToTable("RESTAURANT_TABLE_TYPES");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Other.Comments", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("COMMENT");
 
                     b.Property<short>("RESERVATION_ID")
                         .HasColumnType("smallint");
 
                     b.Property<float>("Rate")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("RATE");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RESERVATION_ID");
 
-                    b.ToTable("Comments");
+                    b.ToTable("COMMENTS");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Reservation.ReservationRequestQueue", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
@@ -170,14 +188,15 @@ namespace RestaurantReservation.Migrations
 
                     b.HasIndex("RESERVATION_ID");
 
-                    b.ToTable("ReservationRequestQueues");
+                    b.ToTable("RESERVATION_REQUEST_QUEUE");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Reservation.Reservations", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
@@ -185,36 +204,44 @@ namespace RestaurantReservation.Migrations
                         .HasColumnType("smallint");
 
                     b.Property<float>("Duration")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("DURATION");
 
                     b.Property<short>("LOCATION_ID")
                         .HasColumnType("smallint");
 
                     b.Property<string>("Note")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("NOTE");
 
                     b.Property<int>("PeopleNumber")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("PEOPLE_NUMBER");
 
                     b.Property<short>("PointsUsed")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("POINTS_USED");
 
                     b.Property<short>("RESTAURANT_ID")
                         .HasColumnType("smallint");
 
                     b.Property<DateTime>("RegDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("REG_DATE");
 
                     b.Property<DateTime>("ReservationDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("RESERVATION_DATE");
 
                     b.Property<byte[]>("Status")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("STATUS");
 
                     b.Property<DateTime>("StatusChangeDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("STATUS_CHANGE_DATE");
 
                     b.Property<short>("TABLE_TYPE_ID")
                         .HasColumnType("smallint");
@@ -229,22 +256,25 @@ namespace RestaurantReservation.Migrations
 
                     b.HasIndex("TABLE_TYPE_ID");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("RESERVATIONS");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Reservation.RestaurantMonthlySchedule", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<DateTime>("Day")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DAY");
 
                     b.Property<int>("FreeTables")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("FREE_TABLES");
 
                     b.Property<short>("SHEME_ID")
                         .HasColumnType("smallint");
@@ -253,14 +283,15 @@ namespace RestaurantReservation.Migrations
 
                     b.HasIndex("SHEME_ID");
 
-                    b.ToTable("RestaurantMonthlySchedules");
+                    b.ToTable("RESTAURANT_MONTHLY_SCHEDULE");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.RestaurantsSettings.RestaurantCapacitySheme", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
@@ -274,7 +305,8 @@ namespace RestaurantReservation.Migrations
                         .HasColumnType("smallint");
 
                     b.Property<int>("TableCount")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("TABLE_COUNT");
 
                     b.HasKey("Id");
 
@@ -284,20 +316,22 @@ namespace RestaurantReservation.Migrations
 
                     b.HasIndex("TABLE_TYPE_ID");
 
-                    b.ToTable("RestaurantCapacityShemes");
+                    b.ToTable("RESTAURANT_CAPACITY_SCHEME");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.RestaurantsSettings.RestaurantImages", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<string>("Image")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("IMAGE");
 
                     b.Property<short>("RESTAURANT_ID")
                         .HasColumnType("smallint");
@@ -306,22 +340,25 @@ namespace RestaurantReservation.Migrations
 
                     b.HasIndex("RESTAURANT_ID");
 
-                    b.ToTable("RestaurantImages");
+                    b.ToTable("RESTAURANT_IMAGES");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.RestaurantsSettings.RestaurantScheduleSettings", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<short>("HourFrom")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("HOUR_FROM");
 
                     b.Property<short>("HourTo")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("HOUR_TO");
 
                     b.Property<short>("RESTAURANT_ID")
                         .HasColumnType("smallint");
@@ -330,10 +367,12 @@ namespace RestaurantReservation.Migrations
                         .HasColumnType("smallint");
 
                     b.Property<DateTime>("SpecificDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("SPECIFIC_DATE");
 
                     b.Property<int>("WeekDay")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("WEEK_DAY");
 
                     b.HasKey("Id");
 
@@ -341,20 +380,22 @@ namespace RestaurantReservation.Migrations
 
                     b.HasIndex("SPECIAL_CONDITION_ID");
 
-                    b.ToTable("RestaurantScheduleSettings");
+                    b.ToTable("RESTAURANT_SCHEDULE_SETTINGS");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.System.NotificationSettings", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DESCRIPTION");
 
                     b.Property<short>("EVENT_ID")
                         .HasColumnType("smallint");
@@ -364,7 +405,8 @@ namespace RestaurantReservation.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TITLE");
 
                     b.HasKey("Id");
 
@@ -372,14 +414,15 @@ namespace RestaurantReservation.Migrations
 
                     b.HasIndex("RESTAURANT_ID");
 
-                    b.ToTable("NotificationSettings");
+                    b.ToTable("NOTIFICATION_DEFAULT_SETTINGS");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.System.SystemLogs", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
@@ -387,78 +430,96 @@ namespace RestaurantReservation.Migrations
                         .HasColumnType("smallint");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DATE");
 
                     b.Property<string>("Log")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("LOG");
 
                     b.Property<string>("MsgStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MSG_STATUS");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ACCOUNT_ID");
 
-                    b.ToTable("SystemLogs");
+                    b.ToTable("SYSTEM_LOGS");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Users.Accounts", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
                     b.Property<short>("AccessFailCount")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ACCESS_FAIL_COUNT");
 
                     b.Property<DateTime>("BlockedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("BLOCKED_AT");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CREATED_AT");
+
+                    b.Property<short>("CurrentAccessFailCount")
+                        .HasColumnType("smallint")
+                        .HasColumnName("CURRENT_ACCESS_FAIL_COUNT");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("EMAIL");
 
                     b.Property<DateTime>("LastChangeAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LAST_CHANGE_AT");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PASSWORD");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PHONE");
 
                     b.Property<short>("ROLE_ID")
                         .HasColumnType("smallint");
 
                     b.Property<byte[]>("Status")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("STATUS");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("USERNAME");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ROLE_ID");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("ACCOUNTS");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Users.Clients", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
@@ -467,27 +528,31 @@ namespace RestaurantReservation.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FIRST_NAME");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("LAST_NAME");
 
                     b.Property<int>("Points")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("POINTS");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ACCOUNT_ID");
 
-                    b.ToTable("Clients");
+                    b.ToTable("CLENTS");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Users.Restaurants", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
@@ -499,27 +564,34 @@ namespace RestaurantReservation.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ADDRESS");
 
                     b.Property<long>("Bulstat")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("BULSTAT");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("COMPANY_NAME");
 
                     b.Property<float>("DefaultMaxResDuration")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("DEFAULT_MAX_RE_DURATION");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DESCRIPTION");
 
                     b.Property<float>("KeepResTableTime")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("KEEP_RES_TABLE_TIME");
 
                     b.Property<float>("Rating")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("RATING");
 
                     b.HasKey("Id");
 
@@ -527,7 +599,7 @@ namespace RestaurantReservation.Migrations
 
                     b.HasIndex("ATMOSPHERE_ID");
 
-                    b.ToTable("Restaurants");
+                    b.ToTable("RESTAURANTS");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Other.Comments", b =>

@@ -1,4 +1,4 @@
-﻿using RestaurantReservation.Common;
+﻿using RestaurantReservation.Common.GlobalEnums;
 using RestaurantReservation.Models.Nomenclatures;
 using RestaurantReservation.Models.Users;
 using System.ComponentModel.DataAnnotations;
@@ -19,13 +19,13 @@ namespace RestaurantReservation.Models.RestaurantsSettings
 
         [Column("RESTAURANT_ID")]
         [ForeignKey("RESTAURANT_ID")]
-        public virtual Restaurants Restaurant { get; set; }
+        public Restaurants? Restaurant { get; set; }
 
         [Column("SPECIFIC_DATE")]
         public DateTime SpecificDate { get; set; }
 
         [Column("WEEK_DAY")]
-        public WeekDays WeekDay { get; set; }
+        public GlobalEnums.WeekDays WeekDay { get; set; }
 
         [Column("HOUR_FROM")]
         public short HourFrom { get; set; }

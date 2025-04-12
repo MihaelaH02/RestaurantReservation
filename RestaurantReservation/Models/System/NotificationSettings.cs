@@ -2,6 +2,7 @@
 using RestaurantReservation.Models.Users;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RestaurantReservation.Models.System
 {
@@ -18,7 +19,7 @@ namespace RestaurantReservation.Models.System
 
         [Column("RESTAURANT_ID")]
         [ForeignKey("RESTAURANT_ID")]
-        public virtual Restaurants Restaurant { get; set; }
+        public Restaurants? Restaurant { get; set; }
 
         [Column("EVENT_ID")]
         [ForeignKey("EVENT_ID")]

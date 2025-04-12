@@ -46,6 +46,9 @@ namespace RestaurantReservation.Models.Users
         [Column("ACCESS_FAIL_COUNT")]
         public short AccessFailCount { get; set; }
 
+        [Column("CURRENT_ACCESS_FAIL_COUNT")]
+        public short CurrentAccessFailCount { get; set; }
+
         [Column("CREATED_AT")]
         public DateTime CreatedAt { get; set; }
         

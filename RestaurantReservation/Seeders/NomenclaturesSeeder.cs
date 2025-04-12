@@ -37,9 +37,15 @@ namespace RestaurantReservation.Seeders
             if (!context.RestaurantAtmospheres.Any() )
             {
                 await context.RestaurantAtmospheres.AddRangeAsync(
-                    new RestaurantAtmosphere { Atmosphere = "Бар" },
                     new RestaurantAtmosphere { Atmosphere = "Ресторант" },
-                    new RestaurantAtmosphere { Atmosphere = "Друго" }
+                    new RestaurantAtmosphere { Atmosphere = "Бар" },
+                    new RestaurantAtmosphere { Atmosphere = "Италиански" },
+                    new RestaurantAtmosphere { Atmosphere = "Мексикански" },
+                    new RestaurantAtmosphere { Atmosphere = "Китайски" },
+                    new RestaurantAtmosphere { Atmosphere = "Азиатски" },
+                    new RestaurantAtmosphere { Atmosphere = "Гръцки" },
+                    new RestaurantAtmosphere { Atmosphere = "Турски" }
+
                 );
             }
 
@@ -60,17 +66,17 @@ namespace RestaurantReservation.Seeders
                 );
             }
 
-            if (!context.restaurantSpecialConditions.Any())
+            if (!context.RestaurantSpecialConditions.Any())
             {
-                await context.restaurantSpecialConditions.AddRangeAsync(
+                await context.RestaurantSpecialConditions.AddRangeAsync(
                     new RestaurantSpecialConditions { Status = new byte[] { 0x00 }, SpecialCondition = "Няма" },
                     new RestaurantSpecialConditions { Status = new byte[] { 0x02 }, SpecialCondition = "Празнично работно време" }, // бит 1
                     new RestaurantSpecialConditions { Status = new byte[] { 0x02 }, SpecialCondition = "Само телефонни резервации" }, //бит 1
                     new RestaurantSpecialConditions { Status = new byte[] { 0x02 }, SpecialCondition = "Частно събитие" }, //бит 1
                     new RestaurantSpecialConditions { Status = new byte[] { 0x02 }, SpecialCondition = "Почивен ден" }, // бит 1
                     new RestaurantSpecialConditions { Status = new byte[] { 0x02 }, SpecialCondition = "Технически проблем" }, // бит 1
-                    new RestaurantSpecialConditions { Status = new byte[] { 0x04 }, SpecialCondition = "Жива музика" }, // бит 2
-                    new RestaurantSpecialConditions { Status = new byte[] { 0x04 }, SpecialCondition = "Специална вечер" } // бит 2
+                    new RestaurantSpecialConditions { Status = new byte[] { 0x00 }, SpecialCondition = "Жива музика" }, // бит 2
+                    new RestaurantSpecialConditions { Status = new byte[] { 0x00 }, SpecialCondition = "Специална вечер" } // бит 2
                 );
             }
 

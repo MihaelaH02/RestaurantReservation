@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestaurantReservation.Models.Users
 {
-    [Table("CLENTS")]
+    [Table("CLIENTS")]
     public class Clients
     {
         public Clients() { }

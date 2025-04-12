@@ -6,11 +6,7 @@ namespace RestaurantReservation.Models.Nomenclatures
 {
     public static class SpecialConditionsStatusBits
     {
-        public const int STS_NOT_ACCEPT = 1; // 1 - неприема резервации онлайн
-        public const int STS_ACCESPT    = 2; // 2 - приема резервации онлайн
-       /* public const int STS_PRIVATE_EVENT  = 3; // 3 - часто събите
-        public const int STS_NOT_ACCEPT_RES = 4; // 4 - не приема резервации
-        public const int STS_LIVE_MUSIC     = 5; // 5 - жива музика*/
+        public const int STS_NOT_ACCEPT = 1; // 1 - не приема резервации онлайн
     }
 
     [Table("RESTAURANT_SPECIAL_CONDITIONS")]
