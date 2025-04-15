@@ -1,30 +1,34 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Common;
+using RestaurantReservation.DTO.Email;
 using RestaurantReservation.DTO.RegisterDTO;
 using RestaurantReservation.Models.Nomenclatures;
 using RestaurantReservation.Models.Users;
-using System.Security.Principal;
+using RestaurantReservation.Repository.System;
 using System.Text.Json;
+using static RestaurantReservation.Common.GlobalEnums.GlobalEnums;
 
 namespace RestaurantReservation.Repository.Users
 {
     /// <summary> Клас за обработка на акаунти към базата данни </summary>
-    public class AccountRepository
+    public class AccountRepository : IAccountsRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<Accounts> _passwordHasher;
+        private readonly IEmailRepository _mailRepository;
 
-        public AccountRepository(ApplicationDbContext context, IPasswordHasher<Accounts> passwordHasher)
+        public AccountRepository( ApplicationDbContext context
+                                , IPasswordHasher<Accounts> passwordHasher
+                                , IEmailRepository mailRepository)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
+            _mailRepository = mailRepository;
         }
 
         /// <summary> Добавяне на нов акаунт </summary>
-        public async Task<Accounts> RegisterAsync(JsonElement registerRequest)
+        public async Task<Accounts> RegisterAsync(JsonElement registerRequest, MailRequest mailRequest)
         {
             RegisterDTO? account = null;
             ClientsRegisterDTO? client = null;
@@ -80,7 +84,6 @@ namespace RestaurantReservation.Repository.Users
                     // Добавяне на нов запис за клиент
                     if(client != null)
                     {
-
                         var newClient = new Clients
                         {
                             Account = newAccount,
@@ -91,18 +94,28 @@ namespace RestaurantReservation.Repository.Users
 
                         _context.Clients.Add(newClient);
                         await _context.SaveChangesAsync();
+
+                        mailRequest = await _mailRepository.LoadMailTemplate((short)NotificationEventsTypes.Registration);
+                        if (mailRequest == null)
+                            throw new ArgumentNullException(nameof(mailRequest));
+
+                        mailRequest.ToEmail = account.Email;
+                        mailRequest.Body = mailRequest.Body
+                                            .Replace("{NAME_USER}", newClient.FirstName + " " + newClient.FirstName)
+                                            .Replace("{LINK}", "test")
+                                            .Replace("{APP_NAME}", SYSTEM_DEFINES.APP_NAME);
+
                     }
 
                     // Добавяне на нов запис за ресторант 
                     else if (restaurant != null)
                     {
-
                         // Валидация на входни данни при регистрация
-                        ValidateNewRestaurant validateNewRestaurant = new ValidateNewRestaurant(_context);
+                        /*ValidateNewRestaurant validateNewRestaurant = new ValidateNewRestaurant(_context);
                         result = await validateNewRestaurant.Validate(restaurant).ConfigureAwait(false);
 
                         if (result != null)
-                            throw result;
+                            throw result;*/
 
                         var newRestaurant = new Restaurants
                         {
@@ -119,7 +132,7 @@ namespace RestaurantReservation.Repository.Users
 
                     }
 
-                    await transaction.CommitAsync();
+                    await transaction.CommitAsync();                   
                     return newAccount;
                 }
                 catch (Exception ex)
@@ -131,7 +144,7 @@ namespace RestaurantReservation.Repository.Users
         }
 
         /// <summary> Влизане в акаунт </summary>
-        public async Task<Accounts?> LoginAsync(LoginDTO dto)
+        public async Task<Accounts?> LoginAsync(LoginDTO dto, MailRequest mailRequest)
         {
             Accounts? account = _context.Accounts
                     .Include(a => a.Role)
@@ -139,16 +152,19 @@ namespace RestaurantReservation.Repository.Users
 
             //Проверка за открит акаунт по потребителско име
             if (account == null)
-                throw new ErrorMsg(false, ERROR_MSG.MSG_ACCOUNTS_LOGIN_WRONG_USERNAME);
+                throw new ErrorMsg(ERROR_MSG.MSG_ACCOUNTS_LOGIN_WRONG_USERNAME);
 
             //Проверка дали акаунта е блокиран
             if ( GlobalMethods.GetBit(account.Status, AccountStatusBits.STS_BLOCKED) )
-                throw new ErrorMsg(false, ERROR_MSG.MSG_ACCOUNTS_LOGIN_USER_BLOCKED);
+                throw new ErrorMsg(ERROR_MSG.MSG_ACCOUNTS_LOGIN_USER_BLOCKED);
 
             //Проверка дали подадената парола е коректна
             if ( _passwordHasher.VerifyHashedPassword(account, account.Password, dto.Password) == PasswordVerificationResult.Failed )
             {
-                //Ако не е увеличаваме брояча и блокираме потребителя
+                if(account.Role.Id != (short)UserRoles.Client)
+                    throw new ErrorMsg( ERROR_MSG.MSG_ACCOUNTS_LOGIN_WRONG_PASSWORD);
+
+                //Ако не е увеличаваме брояча и блокираме потребителя(само за клиенти)
                 account.CurrentAccessFailCount++;
                 if (account.AccessFailCount == account.CurrentAccessFailCount)
                 {
@@ -156,13 +172,29 @@ namespace RestaurantReservation.Repository.Users
                     GlobalMethods.SetBit(account.Status, AccountStatusBits.STS_BLOCKED, true);
                     account.LastChangeAt = DateTime.UtcNow;
                     account.BlockedAt = DateTime.UtcNow;
+
+                    mailRequest = await _mailRepository.LoadMailTemplate((short)NotificationEventsTypes.BlockedUser);
+                    if (mailRequest == null)
+                        throw new ArgumentNullException(nameof(mailRequest));
+
+                    mailRequest.ToEmail = account.Email;
+                    mailRequest.Body = mailRequest.Body
+                                    .Replace("{NAME_USER}", account.Username)
+                                    .Replace("{LINK}", "test")
+                                    .Replace("{APP_NAME}", SYSTEM_DEFINES.APP_NAME);
+
                 }
 
                 _context.Accounts.Update(account);
                 await _context.SaveChangesAsync();
 
-                throw new ErrorMsg(false, ERROR_MSG.MSG_ACCOUNTS_LOGIN_WRONG_PASSWORD);
+                throw new ErrorMsg(ERROR_MSG.MSG_ACCOUNTS_LOGIN_USER_BLOCKED);
             }
+
+            account.CurrentAccessFailCount = 0;
+
+            _context.Accounts.Update(account);
+            await _context.SaveChangesAsync();
 
             return account;
         }

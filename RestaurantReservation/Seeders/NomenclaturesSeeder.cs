@@ -12,9 +12,9 @@ namespace RestaurantReservation.Seeders
             if (!context.AccountRoleTypes.Any())
             {
                 await context.AccountRoleTypes.AddRangeAsync(
-                    new AccountRoleType { Role = "Администратор" },
-                    new AccountRoleType { Role = "Ресторант" },
-                    new AccountRoleType { Role = "Потребител" }
+                    new AccountRoleType { Role = "Admin" },
+                    new AccountRoleType { Role = "Restaurant" },
+                    new AccountRoleType { Role = "Client" }
                 );
             }
 

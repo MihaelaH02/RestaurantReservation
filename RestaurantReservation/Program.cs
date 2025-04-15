@@ -11,6 +11,10 @@ using Microsoft.AspNetCore.Identity;
 using RestaurantReservation.Models.Users;
 using RestaurantReservation.Services.EmailSender;
 using RestaurantReservation.Repository.System;
+using RestaurantReservation.Services;
+using RestaurantReservation.Repository.RestaurantsList;
+using RestaurantReservation.Repository.RestaurantsList.RestaurantsList;
+using RestaurantReservation.Services.RestaurantsService;
 
 namespace RestaurantReservation;
 
@@ -28,16 +32,22 @@ public class Program
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
 
-        //`Repository` слой
-        builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-        builder.Services.AddScoped<AccountRepository>();
-        builder.Services.AddScoped<MailRepository>();
-
-        //`Service` слой
         builder.Services.AddScoped<IPasswordHasher<Accounts>, PasswordHasher<Accounts>>();
-        builder.Services.AddScoped<JwtService>();
+
+        //`Repository` слой
+        builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+        builder.Services.AddScoped<IEmailRepository, EmailRepository>();
+        builder.Services.AddScoped<IAccountsRepository, AccountRepository>();
+        builder.Services.AddScoped<IPasswordResetRepository, PasswordResetRepository>();
+        builder.Services.AddScoped<ISearchRestaurantRepository, RestaurantsListRepository>();
+        
+        //`Service` слой
+        builder.Services.AddScoped<IJwtService, JwtService>();
+        builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseRepository<>));
         builder.Services.AddScoped<IMailService, MailSenderService>();
-        builder.Services.AddScoped<AccountsService>();
+        builder.Services.AddScoped<IAccountsService, AccountsService>();
+        builder.Services.AddScoped<IPasswordResetService, PasswordResetService>();
+        builder.Services.AddScoped<IRestaurantListService, RestaurantListService>();
 
         builder.Services.AddControllersWithViews();
 
@@ -62,8 +72,7 @@ public class Program
             });
 
         builder.Services.AddAuthorization();
-
-        //
+        
         var app = builder.Build();
 
         // Изпълнение на Seeder
@@ -83,11 +92,10 @@ public class Program
             app.UseHsts();
         }
 
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
         app.UseRouting();
-
         app.UseAuthorization();
 
         app.MapControllerRoute(

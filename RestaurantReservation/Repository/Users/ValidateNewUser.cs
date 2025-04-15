@@ -5,7 +5,7 @@ using RestaurantReservation.DTO.RegisterDTO;
 namespace RestaurantReservation.Repository.Users
 {
     /// <summary> Клас за валидация на нов акаунт </summary>
-    public class ValidateNewUser : ValidationRepository<RegisterDTO>
+    public class ValidateNewUser : IValidationRepository<RegisterDTO>
     {
         private readonly ApplicationDbContext _context;
 
@@ -20,13 +20,13 @@ namespace RestaurantReservation.Repository.Users
                 throw new ArgumentNullException(nameof(newUser));
 
             if (!await ValidateUsername(newUser.Username).ConfigureAwait(false))
-                return new ErrorMsg(false, string.Format(ERROR_MSG.MSG_ACCOUNTS_REGISTER_USERNAME_TAKEN, newUser.Username) );
+                return new ErrorMsg(string.Format(ERROR_MSG.MSG_ACCOUNTS_REGISTER_USERNAME_TAKEN, newUser.Username) );
 
             if (!await ValidateEmail(newUser.Email).ConfigureAwait(false))
-                return new ErrorMsg(false, string.Format(ERROR_MSG.MSG_ACCOUNTS_REGISTER_EMAIL_TAKEN, newUser.Email) );
+                return new ErrorMsg(string.Format(ERROR_MSG.MSG_ACCOUNTS_REGISTER_EMAIL_TAKEN, newUser.Email) );
 
             if (!await ValidatePhone(newUser.PhoneNumber).ConfigureAwait(false))
-                return new ErrorMsg(false, string.Format(ERROR_MSG.MSG_ACCOUNTS_REGISTER_PHONE_TAKEN, newUser.PhoneNumber) );
+                return new ErrorMsg(string.Format(ERROR_MSG.MSG_ACCOUNTS_REGISTER_PHONE_TAKEN, newUser.PhoneNumber) );
 
             return null;
         }

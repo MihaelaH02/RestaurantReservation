@@ -1,5 +1,4 @@
-﻿using RestaurantReservation.Models.Nomenclatures;
-
+﻿
 namespace RestaurantReservation.DTO.RegisterDTO
 {
     /// <summary> Клас за регистрация на акаунт </summary>

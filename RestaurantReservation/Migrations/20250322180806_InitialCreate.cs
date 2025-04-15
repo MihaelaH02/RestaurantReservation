@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -174,28 +173,6 @@ namespace RestaurantReservation.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SYSTEM_LOGS",
-                columns: table => new
-                {
-                    Id = table.Column<short>(name: "ID", type: "smallint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(name: "DATE", type: "datetime", nullable: false),
-                    MsgStatus = table.Column<string>(name: "MSG_STATUS", type: "nvarchar(32)", nullable: false),
-                    Log = table.Column<string>(name: "LOG", type: "nvarchar(max)", nullable: false),
-                    AccountId = table.Column<short>(name: "ACCOUNT_ID", type: "smallint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SYSTEM_LOGS", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SYSTEM_LOGS_ACCOUNTS_ACCOUNT_ID",
-                        column: x => x.AccountId,
-                        principalTable: "ACCOUNTS",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "NOTIFICATION_DEFAULT_SETTINGS",
                 columns: table => new
                 {
@@ -240,6 +217,7 @@ namespace RestaurantReservation.Migrations
                     PeopleNumber = table.Column<int>(name: "NUMBER_PEOPLE", type: "int", nullable: false),
                     Duration = table.Column<float>(name: "DURATION", type: "float", nullable: false),
                     PointsUsed = table.Column<short>(name: "POINTS_USED", type: "smallint", nullable: false),
+                    ResarvationName = table.Column<string>(name: "NAME_RESERVATION", type: "nvarchar(32)", nullable: false),
                     Note = table.Column<string>(name: "NOTE", type: "nvarchar(510)", nullable: false)
                 },
                 constraints: table =>
@@ -549,11 +527,6 @@ namespace RestaurantReservation.Migrations
                columns: new[] { "RESTAURANT_ID", "LOCATION_ID", "TABLE_TYPE_ID" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_SYSTEM_LOGS",
-                table: "SYSTEM_LOGS",
-                columns: new[] { "DATE", "MSG_STATUS" });
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RESTAURANT_IMAGES",
                 table: "RESTAURANT_IMAGES",
                 column: "RESTAURANT_ID");
@@ -619,9 +592,6 @@ namespace RestaurantReservation.Migrations
 
             migrationBuilder.DropTable(
                 name: "RESTAURANTScheduleSettings");
-
-            migrationBuilder.DropTable(
-                name: "SYSTEM_LOGS");
 
             migrationBuilder.DropTable(
                 name: "NOTIFICATION_EVENTS");

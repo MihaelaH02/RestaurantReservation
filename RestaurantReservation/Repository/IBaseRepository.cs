@@ -1,9 +1,13 @@
-﻿namespace RestaurantReservation.Repository
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace RestaurantReservation.Repository
 {
-    public interface IRepository<T> where T : class
+    public interface IBaseRepository<T> where T : class
     {
+        Task SaveChangesAsync();
+
         /// <summary>Достъп до запис по Ид </summary>
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(short id);
 
         /// <summary> Извличане на всички записи </summary>
         Task<IEnumerable<T>> GetAllAsync();
@@ -12,9 +16,9 @@
         Task AddAsync(T entity);
 
         /// <summary> Редакция </summary>
-        void Update(T entity);
+        Task Update(T entity);
 
         /// <summary> Изтриване </summary>
-        void Delete(T entity);
+        Task Delete(T entity);
     }
 }

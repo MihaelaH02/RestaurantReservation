@@ -1,14 +1,13 @@
-﻿using System.Data;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using RestaurantReservation.Common;
 
 namespace RestaurantReservation.Services.Users
 {
-    public class JwtService
+    public class JwtService : IJwtService
     {
         private readonly JwtSettings _jwtSettings;
 
@@ -38,6 +37,16 @@ namespace RestaurantReservation.Services.Users
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public Task<string?> ResetPasswordAsync(JsonElement paswordResetRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SendResetCodeAsync(string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }

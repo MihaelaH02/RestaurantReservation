@@ -64,6 +64,9 @@ namespace RestaurantReservation.Models.Reservation
         [Column("POINTS_USED")]
         public short PointsUsed { get; set; }
 
+        [Column("NAME_RESERVATION")]
+        public string ResarvationName { get; set; }
+
         [Column("NOTE")]
         public string Note { get; set; }
     }

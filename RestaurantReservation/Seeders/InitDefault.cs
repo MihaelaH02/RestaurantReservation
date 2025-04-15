@@ -35,8 +35,8 @@ namespace RestaurantReservation.Seeders
                 var admin = new Accounts()
                 {
                     Status = GlobalMethods.SetBit(new byte[] { 0x00 }, AccountStatusBits.STS_ACTIVE, true),
-                    Role = context.AccountRoleTypes.First(x => x.Role == "Администратор"),
-                    Username = "Adminov",
+                    Role = context.AccountRoleTypes.First(x => x.Role == "Admin"),
+                    Username = "Admin",
                     Email = "adm@abv.bg",
                     Phone = "123456789",
                     AccessFailCount = 0,

@@ -5,7 +5,7 @@ using RestaurantReservation.DTO.RegisterDTO;
 namespace RestaurantReservation.Repository.Users
 {
     /// <summary> Клас за валидация на нов ресторант </summary>
-    public class ValidateNewRestaurant : ValidationRepository<RestaurantRegisterDTO>
+    /*public class ValidateNewRestaurant : ValidationRepository<RestaurantRegisterDTO>
     {
         private readonly ApplicationDbContext _context;
 
@@ -30,5 +30,5 @@ namespace RestaurantReservation.Repository.Users
         {
             return !await _context.Restaurants.AnyAsync(r => r.Bulstat == bulstat).ConfigureAwait(false);
         }
-    }
+    }*/
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Models.AdditionalFunctionality;
 using RestaurantReservation.Models.Nomenclatures;
 using RestaurantReservation.Models.Other;
 using RestaurantReservation.Models.Reservation;
@@ -14,6 +15,7 @@ public class ApplicationDbContext : DbContext
 
     /// <summary> Tаблици за допълнителни функционалности </summary>
     public DbSet<Comments>                      Comments { get; set; }
+    public DbSet<RestaurantSearchFilter>        RestaurantSearchFilter { get; set; }
 
     /// <summary> Таблици с номенклатури </summary>
     public DbSet<AccountRoleType>               AccountRoleTypes { get; set; }
@@ -35,11 +37,10 @@ public class ApplicationDbContext : DbContext
 
     /// <summary> Системни таблици </summary>
     public DbSet<NotificationSettings>          NotificationSettings { get; set; }
-    public DbSet<SystemLogs>                    SystemLogs { get; set; }
 
     /// <summary> Таблици за потребители </summary>
     public DbSet<Accounts>                      Accounts { get; set; }
     public DbSet<Clients>                       Clients { get; set; }
     public DbSet<Restaurants>                   Restaurants { get; set; }
-
+    public DbSet<PasswordResetToken>            PasswordResetTokens { get; set; }
 }

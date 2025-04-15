@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace RestaurantReservation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250413080449_UpdateMigration")]
+    partial class UpdateMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -443,6 +446,39 @@ namespace RestaurantReservation.Migrations
                     b.ToTable("NOTIFICATION_DEFAULT_SETTINGS");
                 });
 
+            modelBuilder.Entity("RestaurantReservation.Models.System.SystemLogs", b =>
+                {
+                    b.Property<short>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
+                        .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
+
+                    b.Property<short>("ACCOUNT_ID")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DATE");
+
+                    b.Property<string>("Log")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("LOG");
+
+                    b.Property<string>("MsgStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MSG_STATUS");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ACCOUNT_ID");
+
+                    b.ToTable("SYSTEM_LOGS");
+                });
+
             modelBuilder.Entity("RestaurantReservation.Models.Users.Accounts", b =>
                 {
                     b.Property<short>("Id")
@@ -542,28 +578,26 @@ namespace RestaurantReservation.Migrations
 
             modelBuilder.Entity("RestaurantReservation.Models.Users.PasswordResetToken", b =>
                 {
-                    b.Property<Guid>("UUID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UUID");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("EMAIL");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("EXPIRE_AT");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TOKEN");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UUID");
+                    b.HasKey("Id");
 
-                    b.ToTable("ARG_PASSWORD_RESER_TOKENS");
+                    b.ToTable("PasswordResetTokens");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Users.Restaurants", b =>
@@ -759,6 +793,17 @@ namespace RestaurantReservation.Migrations
                     b.Navigation("Event");
 
                     b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("RestaurantReservation.Models.System.SystemLogs", b =>
+                {
+                    b.HasOne("RestaurantReservation.Models.Users.Accounts", "Account")
+                        .WithMany()
+                        .HasForeignKey("ACCOUNT_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("RestaurantReservation.Models.Users.Accounts", b =>

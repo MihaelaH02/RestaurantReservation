@@ -2,12 +2,10 @@
 {
     public class ErrorMsg : Exception
     {
-        public bool Status { get; set; }
         public string Message { get; set; }
 
-        public ErrorMsg(bool status, string message)
+        public ErrorMsg(string message)
         {
-            Status = status;
             Message = message;
         }
     }

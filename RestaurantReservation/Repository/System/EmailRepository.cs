@@ -1,21 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Common;
 using RestaurantReservation.DTO.Email;
-using RestaurantReservation.Models.Reservation;
 using RestaurantReservation.Models.System;
-using RestaurantReservation.Models.Users;
-using RestaurantReservation.Services.EmailSender;
-using System.Text.Json;
 
 namespace RestaurantReservation.Repository.System
 {
-    public class MailRepository
+    public class EmailRepository : IEmailRepository
     {
 
         private readonly ApplicationDbContext _context;
 
-        public MailRepository(ApplicationDbContext context)
+        public EmailRepository( ApplicationDbContext context)
         {
             _context = context;
         }
@@ -28,13 +23,11 @@ namespace RestaurantReservation.Repository.System
                                                      && t.Restaurant.Id == restaurantId)
                                                 .FirstOrDefaultAsync();
             if (template == null)
-                throw new Exception("Email template not found.");
-
-            string title = template.Title.Replace("", SYSTEM_DEFINES.APP_NAME);
+                throw new ArgumentNullException(nameof(template));
 
             return new MailRequest
             {
-                Subject = title,
+                Subject = template.Title.Replace("{APP_NAME}", SYSTEM_DEFINES.APP_NAME),
                 Body = template.Description
             };
         }
